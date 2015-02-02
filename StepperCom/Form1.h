@@ -41,6 +41,9 @@ namespace StepperCom {
 	private: System::Windows::Forms::Button^  bClose;
 	private: System::Windows::Forms::Button^  bScan;
 	private: System::Windows::Forms::ComboBox^  comboPorts;
+	private: System::Windows::Forms::Button^  lbut;
+	private: System::Windows::Forms::Button^  sbut;
+	private: System::Windows::Forms::Button^  rbut;
 
 	protected: 
 
@@ -67,6 +70,9 @@ namespace StepperCom {
 			this->bClose = (gcnew System::Windows::Forms::Button());
 			this->bScan = (gcnew System::Windows::Forms::Button());
 			this->comboPorts = (gcnew System::Windows::Forms::ComboBox());
+			this->lbut = (gcnew System::Windows::Forms::Button());
+			this->sbut = (gcnew System::Windows::Forms::Button());
+			this->rbut = (gcnew System::Windows::Forms::Button());
 			this->SuspendLayout();
 			// 
 			// serialPort1
@@ -122,11 +128,44 @@ namespace StepperCom {
 			this->comboPorts->TabIndex = 4;
 			this->comboPorts->SelectedIndexChanged += gcnew System::EventHandler(this, &Form1::comboPorts_SelectedIndexChanged);
 			// 
+			// lbut
+			// 
+			this->lbut->Location = System::Drawing::Point(141, 76);
+			this->lbut->Name = L"lbut";
+			this->lbut->Size = System::Drawing::Size(32, 23);
+			this->lbut->TabIndex = 5;
+			this->lbut->Text = L"<<";
+			this->lbut->UseVisualStyleBackColor = true;
+			this->lbut->Click += gcnew System::EventHandler(this, &Form1::lbut_Click);
+			// 
+			// sbut
+			// 
+			this->sbut->Location = System::Drawing::Point(181, 76);
+			this->sbut->Name = L"sbut";
+			this->sbut->Size = System::Drawing::Size(32, 23);
+			this->sbut->TabIndex = 6;
+			this->sbut->Text = L"||";
+			this->sbut->UseVisualStyleBackColor = true;
+			this->sbut->Click += gcnew System::EventHandler(this, &Form1::sbut_Click);
+			// 
+			// rbut
+			// 
+			this->rbut->Location = System::Drawing::Point(221, 76);
+			this->rbut->Name = L"rbut";
+			this->rbut->Size = System::Drawing::Size(32, 23);
+			this->rbut->TabIndex = 7;
+			this->rbut->Text = L">>";
+			this->rbut->UseVisualStyleBackColor = true;
+			this->rbut->Click += gcnew System::EventHandler(this, &Form1::rbut_Click);
+			// 
 			// Form1
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->ClientSize = System::Drawing::Size(354, 107);
+			this->Controls->Add(this->rbut);
+			this->Controls->Add(this->sbut);
+			this->Controls->Add(this->lbut);
 			this->Controls->Add(this->comboPorts);
 			this->Controls->Add(this->bScan);
 			this->Controls->Add(this->bClose);
@@ -143,7 +182,7 @@ namespace StepperCom {
 				 if((!serialPort1->IsOpen)) serialPort1->Open();
 			 }
 	private: System::Void bSend_Click(System::Object^  sender, System::EventArgs^  e) {
-				 serialPort1->Write("Test");
+				 if(serialPort1->IsOpen) serialPort1->Write("Test");
 			 }
 	private: System::Void bClose_Click(System::Object^  sender, System::EventArgs^  e) {
 				if(serialPort1->IsOpen) serialPort1->Close();
@@ -156,6 +195,15 @@ private: System::Void bScan_Click(System::Object^  sender, System::EventArgs^  e
 			  comboPorts->SelectedIndex=0;
 		 }
 private: System::Void comboPorts_SelectedIndexChanged(System::Object^  sender, System::EventArgs^  e) {
+		 }
+private: System::Void lbut_Click(System::Object^  sender, System::EventArgs^  e) {
+			 if(serialPort1->IsOpen) serialPort1->Write("l");
+		 }
+private: System::Void sbut_Click(System::Object^  sender, System::EventArgs^  e) {
+			  if(serialPort1->IsOpen) serialPort1->Write("s");
+		 }
+private: System::Void rbut_Click(System::Object^  sender, System::EventArgs^  e) {
+			  if(serialPort1->IsOpen) serialPort1->Write("r");
 		 }
 };
 }
